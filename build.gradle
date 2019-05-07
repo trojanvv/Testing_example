@@ -1,0 +1,61 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'TestngCucumber'
+version = '0.0.1-SNAPSHOT'
+
+description = ""
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+    compile group: 'io.cucumber', name: 'cucumber-java', version: '4.3.1'
+    compile group: 'io.cucumber', name: 'cucumber-testng', version: '4.3.1'
+    testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
+    compile group: 'net.masterthought', name: 'cucumber-reporting', version: '4.0.0'
+    compile group: 'com.codeborne', name: 'selenide', version: '5.2.2'
+    compile group: 'org.reflections', name: 'reflections', version: '0.9.10'
+    testCompile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '3.4.0'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.6'
+    annotationProcessor("org.projectlombok:lombok:1.18.6")
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
+}
+
+clean.doFirst {
+    delete "${rootDir}\\target"
+    println "${rootDir}\\target"
+}
+
+test {
+    jvmArgs += "-Dfile.encoding=UTF-8"
+    jvmArgs += "-Dselenide.browser=utils.CustomWebDriverProvider"
+
+    if (project.getProperties().get('tags')) {
+        jvmArgs += "-Dcucumber.options=" + project.getProperties().get('tags')
+    }
+    if (project.getProperties().get('browser')) {
+        jvmArgs += "-Dbrowser=" + project.getProperties().get('browser')
+    }
+    if (project.getProperties().get('remoteUrl')) {
+        jvmArgs += "-DremoteUrl=" + project.getProperties().get('remoteUrl')
+    }
+    if (project.getProperties().get('version')) {
+        jvmArgs += "-Dversion=" + project.getProperties().get('version')
+    }
+    if (project.getProperties().get('screenResolution')) {
+        jvmArgs += "-DscreenResolution=" + project.getProperties().get('screenResolution')
+    }
+
+    useTestNG() {
+        suites 'testng.xml' //location of our suite.xml
+
+    }
+
+}
