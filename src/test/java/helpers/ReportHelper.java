@@ -18,6 +18,9 @@ public class ReportHelper {
 
         Configuration configuration = new Configuration(reportOutputDirectory, projectName);
         configuration.addClassifications("Platform", System.getProperty("os.name"));
+        configuration.addClassifications("Browser", System.getProperty("browser", "chrome"));
+        configuration.addClassifications("Version", System.getProperty("version", "latest"));
+        configuration.addClassifications("Resolution", System.getProperty("screenResolution", "1920x1080"));
 
         List<String> classificationFiles = new ArrayList<>();
         classificationFiles.add("src/test/resources/config/config.properties");

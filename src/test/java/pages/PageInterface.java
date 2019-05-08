@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class PageInterface<T extends PageInterface> {
 
-    final Class<T> pageType;
+    private final Class<T> pageType;
 
     public PageInterface(Class<T> clazz) {
         super();
@@ -28,21 +28,12 @@ public class PageInterface<T extends PageInterface> {
         return ElementFactory.getElement(getSelector(nameEl).getBy(parameters), pageType.cast(this));
     }
 
-//    Element<T> getElement(Element parent, ParamBy selector, String... parameters) {
-//        return ElementFactory.getElement(selector.getBy(parameters), pageType.cast(this), parent);
-//    }
-
     public List<Element<T>> getElements(String nameEl, String... parameters) {
         return ElementFactory.getElements(getSelector(nameEl).getBy(parameters), pageType.cast(this));
     }
 
-//    List<Element<T>> getElements(Element parent, ParamBy selector, String... parameters) {
-//        return ElementFactory.getElements(selector.getBy(parameters), pageType.cast(this), parent);
-//    }
-
     public PageInterface<T> init() {
         pageElements = getPageElements();
-//        primaryElements = readWithWrappedElements();
         return this;
     }
 
