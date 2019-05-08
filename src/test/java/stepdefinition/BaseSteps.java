@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BaseSteps {
 
-    protected TestBuilder testBuilder = TestBuilder.getInstance();
+    protected final TestBuilder testBuilder = TestBuilder.getInstance();
 
     public void loadPage(String nameOfPage) {
         testBuilder.setCurrentPage(testBuilder.getPage(nameOfPage));
